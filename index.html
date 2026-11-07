@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F7F3EC" />
+<title>Lumen Studio — Boutique Fitness & Yoga</title>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <div class="statusbar">
+    <span>9:41</span>
+    <span class="dots"><i></i><i></i><i></i></span>
+  </div>
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="home">
+    <img class="hero-photo" src="images/yoga-sunlit.jpg" alt="A woman practising yoga in a sunlit room">
+    <div class="hero-cap">Studio 1, 7:10am. The mat by the window always goes first.</div>
+    <div class="hero">
+      <span class="eyebrow">Hawthorne St · doors open 6:15am–9pm</span>
+      <h1>47 minutes before pickup.<br><em>That’s a whole class.</em></h1>
+      <p>Real showers, real mats, no 6am waitlist lottery. Book a spot on Hawthorne St, then take home a meal plan that doesn’t need a trip to three different shops.</p>
+    </div>
+
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" placeholder="Search classes, coaches, styles…" />
+    </div>
+
+    <div class="chips" id="chips"></div>
+
+    <div class="sec-title"><h2>Featured today</h2><a data-go="schedule">View all</a></div>
+    <div class="feature-row" id="featureRow"></div>
+
+    <div class="sec-title"><h2>Classes</h2><a data-go="schedule">Schedule</a></div>
+    <div id="classList"></div>
+
+    <div class="sec-title"><h2>Your coaches</h2></div>
+    <div id="coachList"></div>
+  </section>
+
+  <!-- ============ SCHEDULE ============ -->
+  <section class="screen" id="schedule">
+    <span class="eyebrow">Your Plan</span>
+    <h1 style="font-size:28px;margin:6px 0 16px;">Schedule</h1>
+    <div class="seg" id="schedChips">
+      <button class="on" data-s="up">Upcoming</button>
+      <button data-s="past">History</button>
+    </div>
+    <div id="schedList"></div>
+  </section>
+
+  <!-- ============ MEALS ============ -->
+  <section class="screen" id="meals">
+    <span class="eyebrow">AI Nutrition</span>
+    <h1 style="font-size:28px;margin:6px 0 4px;">Meal Plan</h1>
+    <p class="muted" style="font-size:13.5px;margin-bottom:6px;">Tell us your goal. We build the week — recipes &amp; shopping list included.</p>
+
+    <div class="field-label">Goal</div>
+    <div class="seg-ctrl" id="goalCtrl">
+      <button class="on" data-goal="cut">Lose fat</button>
+      <button data-goal="maintain">Maintain</button>
+      <button data-goal="bulk">Build muscle</button>
+    </div>
+
+    <div class="field-label">Diet style</div>
+    <div class="opts" id="dietOpts"></div>
+
+    <div class="field-label">Allergies &amp; avoid</div>
+    <div class="opts" id="allergyOpts"></div>
+
+    <div class="gen-wrap">
+      <h3>Generate your week</h3>
+      <p>Personalized 7-day plan, auto-adjusted to your training days.</p>
+      <button class="btn btn-terra" id="genBtn" style="width:100%;">Generate Plan</button>
+    </div>
+
+    <div id="planResult"></div>
+  </section>
+
+  <!-- ============ PROFILE ============ -->
+  <section class="screen" id="profile">
+    <div class="pf-head">
+      <div class="av">EM</div>
+      <div>
+        <div class="nm">Emma Cole</div>
+        <div class="em">@emma · Member since 2023</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="st"><b id="stCred">12</b><small>Credits</small></div>
+      <div class="st"><b id="stStreak">23</b><small>Day streak</small></div>
+      <div class="st"><b id="stClass">86</b><small>Classes</small></div>
+    </div>
+
+    <div class="member">
+      <div class="plan">Unlimited Monthly</div>
+      <div class="bal">12 credits</div>
+      <div class="row"><span>Renews Dec 1</span><span>$129 / mo</span></div>
+    </div>
+
+    <div class="card progress" style="margin-bottom:18px;">
+      <div class="pt"><span>Weekly goal</span><span>4 / 5 sessions</span></div>
+      <div class="bar"><i style="width:80%"></i></div>
+    </div>
+
+    <div class="field-label">Body progress</div>
+    <div class="card" style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;">
+        <b style="font-size:15px;">Weight trend</b>
+        <span style="font-size:13px;font-weight:700;color:var(--terra);">−4.3 kg</span>
+      </div>
+      <div id="weightTrend"></div>
+      <div style="display:flex;gap:14px;margin-top:12px;font-size:12.5px;color:var(--muted);">
+        <span>Waist <b style="color:var(--ink)">68→64 cm</b></span>
+        <span>Hip <b style="color:var(--ink)">96→93 cm</b></span>
+        <span>Chest <b style="color:var(--ink)">88→86 cm</b></span>
+      </div>
+    </div>
+
+    <div class="field-label">November Leaderboard</div>
+    <div class="card" style="margin-bottom:18px;padding:6px 14px;" id="leaderboard"></div>
+
+    <div class="field-label">Settings</div>
+    <div class="card settings">
+      <div class="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>Account &amp; payments<span class="ar">›</span></div>
+      <div class="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Notifications<span class="ar">›</span></div>
+      <div class="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Privacy<span class="ar">›</span></div>
+      <div class="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Help<span class="ar">›</span></div>
+    </div>
+  </section>
+
+  <!-- ============ Tab bar ============ -->
+  <nav class="tabbar" id="tabbar">
+    <div class="tab active" data-tab="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Home
+    </div>
+    <div class="tab" data-tab="schedule">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M8 14h3"/></svg>Schedule
+    </div>
+    <div class="tab" data-tab="meals">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 3v8a3 3 0 0 0 6 0V3M8 11v10M19 3c-2 0-3 3-3 6s1 4 3 4v8"/></svg>Meals
+    </div>
+    <div class="tab" data-tab="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile
+    </div>
+  </nav>
+
+  <!-- ============ Overlays ============ -->
+  <div class="overlay" id="overlay"></div>
+  <div class="sheet" id="sheet"></div>
+  <div class="qr-modal" id="qrModal"></div>
+  <div class="toast" id="toast"></div>
+</div>
+
+
+<script src="app.js" defer></script>
+</body>
+</html>
